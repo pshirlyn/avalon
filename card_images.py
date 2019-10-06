@@ -39,13 +39,13 @@ EVIL_MINION_CARD = """
 +++++++++++++
 """
 
-EVIL_MINION_CARD = """
+PERCIVAL_CARD = """
 +++++++++++++
 +           +
 +           +
-+  EVIL     +
-+  MINION:  +
-+   BAD     +
++           +
++ PERCIVAL: +
++   GOOD    +
 +           +
 +           +
 +           +
