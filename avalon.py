@@ -1,8 +1,10 @@
 import card_images
 import time
 from player import Player
+from game import AvalonGame
 
 def start_game():
+    """ Starts game, takes player input and initializes and returns AvalonGame objects with players and roles assigned. """
     print("\033[0mStart game!\033[0m\033c")
     time.sleep(1)
     try:
@@ -15,16 +17,13 @@ def start_game():
             except ValueError:
                 num_players = 0
 
-    players_objects_array = []
-    players_name_array = []
+    curr_game = AvalonGame(num_players)
 
     for i in range(num_players):
         id = i
         name = input("Please enter a name for Player {} (unique is preferred): ".format(str(i+1)))
-        players_objects_array.append(Player(name, id))
-        players_objects_array.append(name)
-    
-    return num_players
+        curr_game.add_player(id, name)
+    return curr_game
 
 def instructions():
     print("\033c\nWelcome to Avalon!\n")
@@ -35,8 +34,5 @@ def instructions():
     input("Press Enter when you're ready to begin!")
 
 
-
-
-
 if __name__ == '__main__':
-    start_game()
+    game = start_game()

@@ -1,17 +1,5 @@
 from enum import Enum
 
-# dictionary mapping role to (team, sees, visible_to, card)
-roles_and_teams = {
-    Role.ASSASSIN: (Team.EVIL, [], ),
-    Role.EVIL_MINION: (Team.EVIL, []),
-    Role.LOYAL_SERVANT: (Team.GOOD, []),
-    Role.MERLIN: (Team.GOOD, [Role.MORGANA, Role.OBERON]),
-    Role.MORGANA: (Team.EVIL),
-    Role.MORDRED: (Team.EVIL),
-    Role.OBERON: (Team.EVIL),
-    Role.PERCIVAL: (Team.GOOD, [Role.MORGANA, Role.MERLIN], [], )
-}
-
 class Team(Enum):
     GOOD = 1
     EVIL = 2
@@ -25,6 +13,18 @@ class Role(Enum):
     OBERON = 6
     ASSASSIN = 7
     EVIL_MINION = 8
+
+# dictionary mapping role to (team, sees, visible_to, card)
+roles_and_teams = {
+    Role.ASSASSIN: (Team.EVIL, [], ),
+    Role.EVIL_MINION: (Team.EVIL, []),
+    Role.LOYAL_SERVANT: (Team.GOOD, []),
+    Role.MERLIN: (Team.GOOD, [Role.MORGANA, Role.OBERON]),
+    Role.MORGANA: (Team.EVIL),
+    Role.MORDRED: (Team.EVIL),
+    Role.OBERON: (Team.EVIL),
+    Role.PERCIVAL: (Team.GOOD, [Role.MORGANA, Role.MERLIN], [], )
+}
 
 class RoleClass:
     def __init__(self, role):

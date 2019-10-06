@@ -1,5 +1,6 @@
 from roles import Role
 import random
+from player import Player
 
 # static dictionary to assign required number of players per quest
 players_per_quest = {
@@ -25,18 +26,24 @@ class AvalonGame():
     def __init__(self, num_players):
         self.num_players = num_players # stores number of players in the game, 5-10
         self.in_progress = True
-        # players indexed by player ID to player object
+        self.game_roles_left = self.get_roles()
         self.players_by_id = []
+        self.current_round = 1
 
     def get_roles(self):
         """ Get roles for each game size as an array. """
         return roles_per_game_size[self.num_players]
 
-    def randomly_assign_roles(self):
+    def add_player(self, id, name):
         """ Returns a list of length num_players with shuffled roles for each player. """
-        game_roles = self.get_roles()
-        roles_by_id = []
-        while len(game_roles) > 0:
-            idx = random.randint(0, len(game_roles)-1)
-            
+        if len(self.game_roles_left) > 0:
+            idx = random.randint(0, len(self.game_roles_left)-1)
+            role = self.game_roles_left.pop(idx)
+            self.players_by_id.append(Player(name, id, role))
+        else:
+            raise ValueError("No roles left!")
+
+    # def run_team_proposal(self):
+    #     for i in self.players_by_id:
+
 
