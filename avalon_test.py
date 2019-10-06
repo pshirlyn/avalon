@@ -19,6 +19,15 @@ class TestAvalonGame(unittest.TestCase):
         random_roles = game.randomly_assign_roles()
         assert len(random_roles) == game.num_players
 
+    def test_voting(self):
+        test_game = AvalonGame(5)
+        for i in range(5):
+            id = i
+            name = "test_player_"+str(i)
+            test_game.add_player(id, name)
+        test_game.run_team_proposal()
+        
+
 if __name__ == "__main__":
     unittest.main()
 

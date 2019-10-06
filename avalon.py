@@ -36,3 +36,4 @@ def instructions():
 
 if __name__ == '__main__':
     game = start_game()
+    game.run_team_proposal(1) # run for quest 1
