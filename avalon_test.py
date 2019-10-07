@@ -12,6 +12,9 @@ class TestAvalonGame(unittest.TestCase):
     def test_instructions(self):
         avalon.instructions()
 
+    def test_role_assignments(self):
+        avalon.instructions()
+
     def test_game_object(self):
         game = AvalonGame(5)
         roles = game.get_roles()

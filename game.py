@@ -29,6 +29,7 @@ class AvalonGame():
         self.in_progress = True
         self.game_roles_left = self.get_roles()
         self.players_by_id = []
+        self.players_by_role = {} # dictionary mapping role to player objects, except for loyal servants
         self.current_round = 1
         self.curr_active_player = 0 # id of current player proposing
 
@@ -41,7 +42,10 @@ class AvalonGame():
         if len(self.game_roles_left) > 0:
             idx = random.randint(0, len(self.game_roles_left)-1)
             role = self.game_roles_left.pop(idx)
-            self.players_by_id.append(Player(name, id, role))
+            current_player = Player(name, id, role)
+            self.players_by_id.append(current_player)
+            if role != Role.LOYAL_SERVANT:
+                self.players_by_role[role] = current_player
         else:
             raise ValueError("No roles left!")
 
@@ -49,6 +53,28 @@ class AvalonGame():
         """ Runs revealing card procedure, assuming all players have already been added. """
         input("Now, we reveal everyone's cards individually. One by one, roles will be revealed. When it is your turn, you may look at the screen. Otherwise, please do not look at the screen. Press ENTER to begin.")
 
+    def get_players_seen(self, player_roles):
+        """ Create a string representation of the players seen and roles seen from an array of roles. Roles are guaranteed to be unique. """
+        players_string = ""
+        roles_string = "" # TODO: return randomized
+
+        for role in player_roles:
+            roles_string += role.name + " "
+            player_obj = players_by_role[role]
+            players_string += "Player {} ({}), ".format(player_obj.id+1, player_obj.name)
+        
+        return res_string
+
+    def run_player_assignment(self):
+        """ Runs player assignment sequence to display cards to each player. """
+        input("\033c\nWe'll now show each of you your roles in turn. Please wait until your name is shown. Press ENTER to begin. \n")
+        for player in self.players_by_id:
+            input("\033c\nPass the device to Player {} ({})\n {}, press ENTER to see your card.".format(player.id+1, player.name, player.name))
+            print(player.card)
+            print("You are on the {} team".format(player.team.name))
+            if player.role != Role.LOYAL_SERVANT:
+                print("You see {}. You know that these players are one of {}, but you do not know who is whom.".format())
+            input("Press ENTER to continue.")
 
     def run_team_proposal(self, quest):
         """ Runs team voting sequence, returns list of team as player objects. """
@@ -114,8 +140,8 @@ class AvalonGame():
 
     def failure(self):
         """ Runs when evil team wins the game! """
-        pass
+        print("EVIL team has won the game. Darkness has prevailed!")
 
     def success(self):
         """ Runs when the good team wins the game! """
-        pass
+        print("Congratulations! The GOOD team has prevailed! You have successfully saved King Arthur.")

@@ -1,4 +1,5 @@
 from enum import Enum
+import card_images
 
 class Team(Enum):
     GOOD = 1
@@ -12,18 +13,16 @@ class Role(Enum):
     MORDRED = 5
     OBERON = 6
     ASSASSIN = 7
-    EVIL_MINION = 8
 
-# dictionary mapping role to (team, sees, visible_to, card)
+# dictionary mapping role to (team, sees, card)
 roles_and_teams = {
-    Role.ASSASSIN: (Team.EVIL, [], ),
-    Role.EVIL_MINION: (Team.EVIL, []),
-    Role.LOYAL_SERVANT: (Team.GOOD, []),
-    Role.MERLIN: (Team.GOOD, [Role.MORGANA, Role.OBERON]),
-    Role.MORGANA: (Team.EVIL),
-    Role.MORDRED: (Team.EVIL),
-    Role.OBERON: (Team.EVIL),
-    Role.PERCIVAL: (Team.GOOD, [Role.MORGANA, Role.MERLIN], [], )
+    Role.ASSASSIN: (Team.EVIL, [Role.MORGANA, Role.MORDRED], card_images.ASSASSIN_CARD),
+    Role.LOYAL_SERVANT: (Team.GOOD, [], card_images.LOYAL_SERVANT_CARD),
+    Role.MERLIN: (Team.GOOD, [Role.MORGANA, Role.OBERON, Role.ASSASSIN], card_images.MERLIN_CARD),
+    Role.MORGANA: (Team.EVIL, [Role.MORDRED, Role.ASSASSIN], card_images.MORGANA_CARD),
+    Role.MORDRED: (Team.EVIL, [Role.MORGANA, Role.ASSASSIN], card_images.MORDRED_CARD),
+    Role.OBERON: (Team.EVIL, [], card_images.OBERON_CARD),
+    Role.PERCIVAL: (Team.GOOD, [Role.MORGANA, Role.MERLIN], card_images.PERCIVAL_CARD)
 }
 
 class RoleClass:
@@ -31,10 +30,6 @@ class RoleClass:
         self.role = role # role enum
 
         self.sees = roles_and_teams[1] # array of other members this person sees
-        # self.visible_to = visible_to[2] # array of other members this person is visible to
         self.team = team[0] # team enum value describing good or evil
 
-        self.card = roles_and_teams[3]
-
-    def is_good(self):
-        return self.team == Team.GOOD
+        self.card = roles_and_teams[2]

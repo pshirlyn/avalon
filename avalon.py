@@ -36,6 +36,8 @@ def instructions():
 
 if __name__ == '__main__':
     game = start_game()
+    instructions()
+    game.run_player_assignment()
     round = 1
     successes = 0
     failures = 0
@@ -49,5 +51,8 @@ if __name__ == '__main__':
 
         if successes >= 3:
             game.success()
+            game.in_progress = False
         elif failures >= 3:
             game.failure()
+            game.in_progress = False
+    

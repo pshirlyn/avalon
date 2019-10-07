@@ -17,22 +17,9 @@ LOYAL_SERVANT_CARD = """
 +++++++++++++
 +           +
 +           +
-+  LOYAL    +
++   LOYAL   +
 +  SERVANT: +
-+   GOOD    +   
-+           +
-+           +
-+           +
-+++++++++++++
-"""
-
-EVIL_MINION_CARD = """
-+++++++++++++
-+           +
-+           +
-+  EVIL     +
-+  MINION:  +
-+   BAD     +
++   GOOD    +
 +           +
 +           +
 +           +
@@ -46,6 +33,59 @@ PERCIVAL_CARD = """
 +           +
 + PERCIVAL: +
 +   GOOD    +
++           +
++           +
++           +
++++++++++++++
+"""
+
+
+MORGANA_CARD = """
++++++++++++++
++           +
++           +
++           +
++  MORGANA: +
++   EVIL    +
++           +
++           +
++           +
++++++++++++++
+"""
+
+MORDRED_CARD = """
++++++++++++++
++           +
++           +
++           +
++  MORDRED: +
++   EVIL    +
++           +
++           +
++           +
++++++++++++++
+"""
+
+OBERON_CARD = """
++++++++++++++
++           +
++           +
++           +
++  OBERON:  +
++   EVIL    +
++           +
++           +
++           +
++++++++++++++
+"""
+
+ASSASSIN_CARD = """
++++++++++++++
++           +
++           +
++           +
++ ASSASSIN: +
++   EVIL    +
 +           +
 +           +
 +           +
