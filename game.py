@@ -44,21 +44,23 @@ class AvalonGame():
         else:
             raise ValueError("No roles left!")
 
-    def run_team_proposal(self):
+    def run_team_proposal(self, quest):
         """ Runs team voting sequence, returns list of team as player objects. """
         decided_team = False
         i = 0
         while True: # loop until we force a team
             # try getting team for quest i+1, voting enabled for all quests but last one
-            proposed_team = self.prompt_for_team(self.players_by_id[self.curr_active_player], i+1)
+            print("Quest {}, voting round {}\n".format(quest, i+1))
+            proposed_team = self.prompt_for_team(self.players_by_id[self.curr_active_player], quest, i+1)
+            self.curr_active_player = (self.curr_active_player + 1) % self.num_players # increment player by one, wrap around
             if not proposed_team:
+                input("Team failed! Press ENTER to propose new team.")
                 i += 1
             else:
-                # we have a team, return
                 return proposed_team
             
 
-    def prompt_for_team(self, player, quest):
+    def prompt_for_team(self, player, quest, voting_round):
         """ Prompt Player Object for a team selection. Return team as array of Players. """
         team = input("\033c\nPlayer {} ({}), please enter in a team of size {} as a list of Player numbers, comma separated.\n".format(player.id+1, player.name, players_per_quest[self.num_players][quest-1]))
         proposed_team = []
@@ -68,13 +70,13 @@ class AvalonGame():
             proposed_team.append(player_obj)
         
         # if we're on the last quest (5), force return this team
-        if quest == 5:
+        if voting_round == 5:
             return proposed_team
 
         # otherwise try voting round
         num_votes = 0
         for i in self.players_by_id:
-            vote = input("\nPlayer {} ({}), please enter Y to vote for this team or N to fail this team.\n".format(i.id+1, self.players_by_id[i.id].name))
+            vote = input("\nPlayer {} ({}), please enter Y to vote for this team or N to fail this team: ".format(i.id+1, self.players_by_id[i.id].name))
             if vote == "Y":
                 num_votes += 1
         

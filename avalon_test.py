@@ -25,7 +25,7 @@ class TestAvalonGame(unittest.TestCase):
             id = i
             name = "test_player_"+str(i)
             test_game.add_player(id, name)
-        test_game.run_team_proposal()
+        test_game.run_team_proposal(1)
         
 
 if __name__ == "__main__":
