@@ -1,3 +1,4 @@
+import roles
 from roles import Role
 import random
 from player import Player
@@ -44,6 +45,11 @@ class AvalonGame():
         else:
             raise ValueError("No roles left!")
 
+    def run_show_roles(self):
+        """ Runs revealing card procedure, assuming all players have already been added. """
+        input("Now, we reveal everyone's cards individually. One by one, roles will be revealed. When it is your turn, you may look at the screen. Otherwise, please do not look at the screen. Press ENTER to begin.")
+
+
     def run_team_proposal(self, quest):
         """ Runs team voting sequence, returns list of team as player objects. """
         decided_team = False
@@ -84,3 +90,32 @@ class AvalonGame():
             return proposed_team
         else: 
             return False
+
+
+    def run_quest(self, team, round):
+        """ Runs quest prompts. Shows to team individually and asks them to vote. Returns True if quest passed or False otherwise. """
+
+        # sets number of failures required to fail this mission
+        if round == 4 and self.num_players >= 7:
+            failures_required = 2
+        else:
+            failures_required = 1
+        
+        input("\033c\nWe now begin the voting process. When the screen displays your name and your player number, you may vote on the quest. Otherwise, do not look at the screen. Press ENTER to begin. ")
+
+        failures = 0
+        for p in team:
+            vote = input("\033c\nPlayer {} ({}), please enter Y if you want the quest to pass or N if you want the quest to fail. If you are on team GOOD, any vote you enter will be registered as a success. Otherwise, you may choose either option.\n".format(p.id+1, p.name))
+            if vote != "Y":
+            #if p.team != Team.GOOD and vote != "Y":
+                failures += 1
+        
+        return failures < failures_required
+
+    def failure(self):
+        """ Runs when evil team wins the game! """
+        pass
+
+    def success(self):
+        """ Runs when the good team wins the game! """
+        pass

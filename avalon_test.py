@@ -26,6 +26,15 @@ class TestAvalonGame(unittest.TestCase):
             name = "test_player_"+str(i)
             test_game.add_player(id, name)
         test_game.run_team_proposal(1)
+
+    def test_quest_run(self):
+        test_game = AvalonGame(5)
+        for i in range(5):
+            id = i
+            name = "test_player_"+str(i)
+            test_game.add_player(id, name)
+        test_team = [test_game.players_by_id[0], test_game.players_by_id[1]]
+        print(test_game.run_quest(test_team, 1))
         
 
 if __name__ == "__main__":

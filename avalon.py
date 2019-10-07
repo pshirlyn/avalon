@@ -36,4 +36,18 @@ def instructions():
 
 if __name__ == '__main__':
     game = start_game()
-    game.run_team_proposal(1) # run for quest 1
+    round = 1
+    successes = 0
+    failures = 0
+    while game.in_progress:
+        team = game.run_team_proposal(round)
+        quest_succeeded = game.run_quest(team, round)
+        if quest_succeeded:
+            successes += 1
+        else:
+            failures += 1
+
+        if successes >= 3:
+            game.success()
+        elif failures >= 3:
+            game.failure()
