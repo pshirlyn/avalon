@@ -44,8 +44,8 @@ class AvalonGame():
             role = self.game_roles_left.pop(idx)
             current_player = Player(name, id, role)
             self.players_by_id.append(current_player)
-            if role != Role.LOYAL_SERVANT:
-                self.players_by_role[role] = current_player
+            #if role != Role.LOYAL_SERVANT:
+            self.players_by_role[role] = current_player
         else:
             raise ValueError("No roles left!")
 
@@ -59,11 +59,12 @@ class AvalonGame():
         roles_string = "" # TODO: return randomized
 
         for role in player_roles:
-            roles_string += role.name + " "
-            player_obj = players_by_role[role]
-            players_string += "Player {} ({}), ".format(player_obj.id+1, player_obj.name)
+            if role in self.players_by_role:
+                roles_string += role.name + " "
+                player_obj = self.players_by_role[role]
+                players_string += "{} (Player {}), ".format( player_obj.name, player_obj.id+1)
         
-        return res_string
+        return roles_string[:-1], players_string[:-2]
 
     def run_player_assignment(self):
         """ Runs player assignment sequence to display cards to each player. """
@@ -73,7 +74,8 @@ class AvalonGame():
             print(player.card)
             print("You are on the {} team".format(player.team.name))
             if player.role != Role.LOYAL_SERVANT:
-                print("You see {}. You know that these players are one of {}, but you do not know who is whom.".format())
+                roles_str, players_str = self.get_players_seen(player.sees)
+                print("You see {}. You know that this player/these players are one of {}, but you may not know who is whom.".format(players_str, roles_str))
             input("Press ENTER to continue.")
 
     def run_team_proposal(self, quest):
@@ -91,11 +93,18 @@ class AvalonGame():
             else:
                 return proposed_team
             
+    def get_players_as_str(self, players_arr):
+        """ Returns str representation of players from array of players objects. """
+        players_str = ""
+        for player_obj in players_arr:
+            players_str += "{} (Player {}), ".format( player_obj.name, player_obj.id+1)
+        return players_str[:-2]
 
     def prompt_for_team(self, player, quest, voting_round):
         """ Prompt Player Object for a team selection. Return team as array of Players. """
         team = input("\033c\nPlayer {} ({}), please enter in a team of size {} as a list of Player numbers, comma separated.\n".format(player.id+1, player.name, players_per_quest[self.num_players][quest-1]))
         proposed_team = []
+        # TODO: check team size before creating team
         for i in team.split(","):
             player_id = int(i)-1 # parse team player id into array index
             player_obj = self.players_by_id[player_id] # TODO: catch parse errors
@@ -104,6 +113,8 @@ class AvalonGame():
         # if we're on the last quest (5), force return this team
         if voting_round == 5:
             return proposed_team
+
+        print("Voting on team consisting of "+self.get_players_as_str(proposed_team))
 
         # otherwise try voting round
         num_votes = 0

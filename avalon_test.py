@@ -1,6 +1,7 @@
 import unittest
 import avalon
 from game import AvalonGame
+import time
 
 class TestAvalonGame(unittest.TestCase):
 
@@ -13,7 +14,12 @@ class TestAvalonGame(unittest.TestCase):
         avalon.instructions()
 
     def test_role_assignments(self):
-        avalon.instructions()
+        test_game = AvalonGame(5)
+        for i in range(5):
+            id = i
+            name = "test_player_"+str(i)
+            test_game.add_player(id, name)
+        test_game.run_player_assignment()
 
     def test_game_object(self):
         game = AvalonGame(5)

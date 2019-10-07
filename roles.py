@@ -29,7 +29,7 @@ class RoleClass:
     def __init__(self, role):
         self.role = role # role enum
 
-        self.sees = roles_and_teams[1] # array of other members this person sees
-        self.team = team[0] # team enum value describing good or evil
+        self.sees = roles_and_teams[role][1] # array of other members this person sees
+        self.team = roles_and_teams[role][0] # team enum value describing good or evil
 
-        self.card = roles_and_teams[2]
+        self.card = roles_and_teams[role][2]
